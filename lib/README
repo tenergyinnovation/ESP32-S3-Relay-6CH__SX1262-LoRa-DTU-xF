@@ -1,0 +1,199 @@
+
+# Library Directory - ESP32-S3-POE-ETH-8DI-8DO Project
+
+This directory contains all external libraries required for the ESP32-S3-POE-ETH-8DI-8DO project.
+
+## 📦 Libraries Included
+
+- **Adafruit_NeoPixel** - RGB LED (WS2812B) control via 1-wire protocol
+- **ArduinoJson** - JSON parsing and serialization
+- **pubsubclient** - MQTT broker client library
+- **WiFiManager** - WiFi configuration and connection management
+- **ModbusMaster** - Modbus RTU protocol for RS485 communication
+- **Universal-Arduino-Telegram-Bot** - Telegram bot integration
+- **HTTPClient** - HTTP/HTTPS client for web requests
+- **WiFiClientSecure** - Secure WiFi connections (SSL/TLS)
+- **ESP32-S3-POE-ETH-8DI-8DO** - Custom library for board control (main project library)
+
+## 🚀 Quick Start
+
+### Option 1: Automatic Installation (Recommended)
+
+Run the provided shell script to clone all required libraries:
+
+```bash
+cd lib/
+./clone_repo.sh
+```
+
+**What the script does:**
+- ✓ Checks git and curl availability
+- ✓ Clones all required libraries from GitHub
+- ✓ Updates existing libraries if already present
+- ✓ Verifies successful installation
+- ✓ Provides colored console output for easy reading
+
+**Requirements:**
+- `git` installed on your system
+- `curl` installed on your system
+- Internet connection
+
+### Option 2: Manual Installation
+
+Clone individual libraries as needed:
+
+```bash
+# Install Adafruit NeoPixel
+git clone --depth 1 https://github.com/adafruit/Adafruit_NeoPixel.git
+
+# Install ArduinoJson
+git clone --depth 1 https://github.com/bblanchon/ArduinoJson.git
+
+# Install MQTT Client
+git clone --depth 1 https://github.com/knolleary/pubsubclient.git
+
+# Install WiFi Manager
+git clone --depth 1 https://github.com/tzapu/WiFiManager.git
+
+# Install Modbus Master
+git clone --depth 1 https://github.com/4-20ma/ModbusMaster.git
+```
+
+## 📂 Directory Structure
+
+```
+lib/
+├── README                           ← This file
+├── clone_repo.sh                    ← Automatic installation script
+├── Adafruit_NeoPixel/               ← RGB LED control
+│   ├── src/
+│   │   ├── Adafruit_NeoPixel.h
+│   │   └── Adafruit_NeoPixel.cpp
+│   └── examples/
+├── ArduinoJson/                     ← JSON library
+├── pubsubclient/                    ← MQTT library
+├── WiFiManager/                     ← WiFi configuration
+├── ModbusMaster/                    ← RS485 Modbus protocol
+├── Universal-Arduino-Telegram-Bot/  ← Telegram integration
+├── HTTPClient/                      ← HTTP client
+├── WiFiClientSecure/                ← Secure WiFi
+└── ESP32-S3-POE-ETH-8DI-8DO/        ← Main custom library
+    ├── src/
+    │   ├── ESP32S3_8DI8DO.h
+    │   └── ESP32S3_8DI8DO.cpp
+    └── examples/
+```
+
+## 🛠 PlatformIO Configuration
+
+The `platformio.ini` file is configured to:
+- Use `lib_extra_dirs = ${PROJECT_DIR}/lib` to search in this directory
+- Automatically include necessary dependencies
+- Ignore conflicting libraries with `lib_ignore`
+
+## 💡 Usage Example
+
+```cpp
+#include <Arduino.h>
+#include "ESP32-S3-POE-ETH-8DI-8DO.h"
+
+ESP32S3_8DI8DO board;
+
+void setup() {
+    Serial.begin(115200);
+    board.begin();
+    
+    // Control RGB LED
+    board.getRGB().setColor(255, 0, 0);  // Red
+    
+    // Beep buzzer
+    board.buzzer_beep(3);  // 3 beeps
+}
+
+void loop() {
+    board.loop();
+    
+    // Read digital input
+    bool di_state = board.getDI().read(0);
+    
+    // Set digital output
+    board.getDO().write(0, HIGH);
+}
+```
+
+## 🔧 Troubleshooting
+
+### Script won't run
+```bash
+chmod +x clone_repo.sh
+```
+
+### Permission denied
+Make sure you have write permissions in the lib/ directory:
+```bash
+chmod 755 /path/to/lib
+```
+
+### Libraries not found during compile
+1. Ensure all libraries are cloned successfully
+2. Run `platformio run --target clean` to rebuild cache
+3. Verify library paths in VS Code IntelliSense settings
+
+### Specific library issues
+- **Adafruit_NeoPixel**: Requires ESP32 core > 2.0.0
+- **ModbusMaster**: Requires RS485 hardware connected
+- **WiFiManager**: May conflict with some WiFi libraries
+
+## 📚 Documentation Links
+
+- [Adafruit NeoPixel Guide](https://learn.adafruit.com/adafruit-neopixel-uberguide)
+- [ArduinoJson Documentation](https://arduinojson.org/)
+- [PubSubClient MQTT](https://pubsubclient.knolleary.net/)
+- [Modbus Protocol](https://en.wikipedia.org/wiki/Modbus)
+- [ESP32-S3 Documentation](https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/)
+
+## ✅ Verification
+
+After running the script, verify installation:
+```bash
+ls -la lib/
+# Should show all library directories listed above
+```
+
+## 📝 Notes
+
+- Use `--depth 1` flag to minimize cloned repository size
+- Libraries are automatically indexed by PlatformIO
+- Keep libraries updated: `git pull` in each library directory
+- Report issues in the project's GitHub repository
+
+---
+
+**Last Updated:** 28 June 2026  
+**Maintained by:** Tenergy Innovation Co., Ltd.
+|  |  |- Foo.c
+|  |  |- Foo.h
+|  |
+|  |- README --> THIS FILE
+|
+|- platformio.ini
+|--src
+   |- main.c
+
+Example contents of `src/main.c` using Foo and Bar:
+```
+#include <Foo.h>
+#include <Bar.h>
+
+int main (void)
+{
+  ...
+}
+
+```
+
+The PlatformIO Library Dependency Finder will find automatically dependent
+libraries by scanning project source files.
+
+More information about PlatformIO Library Dependency Finder
+- https://docs.platformio.org/page/librarymanager/ldf.html
