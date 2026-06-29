@@ -69,7 +69,7 @@ LIBRARY_URLS=(
     "https://github.com/bblanchon/ArduinoJson.git"
     "https://github.com/knolleary/pubsubclient.git"
     "https://github.com/taranais/NTPClient.git"
-    "https://www.waveshare.com/wiki/ESP32-S3-Relay-6CH.git"
+    "https://github.com/tenergyinnovation/ESP32-S3-Relay-6CH__SX1262-LoRa-DTU-xF.git"
 )
 
 # Optional Libraries (uncomment to enable)
